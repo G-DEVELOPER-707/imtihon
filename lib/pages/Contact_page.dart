@@ -15,19 +15,19 @@ class ContactPage extends StatefulWidget {
 class _NoContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
-    return contactList == null
+    return contactList == ''
         ? Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: isClicked == true
+              title: isClicked
                   ? Row(children: [
                       InkWell(
                           onTap: () {
                             isClicked = !isClicked;
                             setState(() {});
                           },
-                          child: Icon(Icons.arrow_back_ios_new)),
+                          child: Icon(Icons.arrow_back_ios_new,color: Colors.black,)),
                       TextFormField(
                         onChanged: (user) {
                           searchedUsers(user);
@@ -51,7 +51,10 @@ class _NoContactPageState extends State<ContactPage> {
                       isClicked = !isClicked;
                       setState(() {});
                     },
-                    child: Icon(Icons.search)),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    )),
                 SizedBox(
                   width: 12,
                 ),
@@ -97,7 +100,7 @@ class _NoContactPageState extends State<ContactPage> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: isClicked == true
+              title: isClicked
                   ? TextFormField(
                       onChanged: (user) {
                         searchedUsers(user);
@@ -120,7 +123,7 @@ class _NoContactPageState extends State<ContactPage> {
                       isClicked = !isClicked;
                       setState(() {});
                     },
-                    child: Icon(Icons.search)),
+                    child: Icon(Icons.search,color: Colors.black,)),
                 SizedBox(
                   width: 12,
                 ),
