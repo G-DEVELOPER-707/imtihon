@@ -13,6 +13,8 @@ class ContactPage extends StatefulWidget {
 }
 
 class _NoContactPageState extends State<ContactPage> {
+  var controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return contactList.isEmpty
@@ -93,12 +95,105 @@ class _NoContactPageState extends State<ContactPage> {
                     backgroundColor: Colors.white,
                     title: isClicked
                         ? TextFormField(
+                            controller: controller,
+                            onChanged: (user) {
+                              searchedUsers(user);
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Search...",
+                              hintStyle: TextStyle(color: Colors.black),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  controller.text = "";
+                                },
+                                icon: Icon(Icons.cancel_outlined),
+                              ),
+                            ),
+                          )
+                        : const Text(
+                            "Contacts",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black),
+                          ),
+                    actions: [
+                      InkWell(
+                          onTap: () {
+                            isClicked = !isClicked;
+                            setState(() {});
+                          },
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          )),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      PopupMenuButton(
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: Colors.black,
+                        ),
+                        onSelected: (value) {
+                          if (value == "Delete") {
+                            contactList.clear();
+                            setState(() {});
+                          }
+                          if (value == "A-Z") {
+                            contactList
+                                .sort((a, b) => a.name.compareTo(b.name));
+                            setState(() {});
+                          }
+                          if (value == "Z-A") {
+                            contactList
+                                .sort((a, b) => b.name.compareTo(a.name));
+                            setState(() {});
+                          }
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          const PopupMenuItem(
+                              value: "Delete", child: Text("Delete all")),
+                          const PopupMenuItem(
+                            value: "A-Z",
+                            child: Text("Sort by A-Z"),
+                          ),
+                          const PopupMenuItem(
+                            value: "Z-A",
+                            child: Text("Sort by Z-A"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                : AppBar(
+                    backgroundColor: Colors.white,
+                    leading: IconButton(
+                        onPressed: () {
+                          isClicked = !isClicked;
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          CupertinoIcons.chevron_back,
+                          color: Colors.black,
+                        )),
+                    title: isClicked
+                        ? TextFormField(
+                            controller: controller,
                             onChanged: (user) {
                               searchedUsers(user);
                               setState(() {});
                             },
                             decoration: InputDecoration(
                                 hintText: "Search...",
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    controller.text = "";
+                                  },
+                                  icon: Icon(Icons.cancel_outlined),
+                                ),
                                 hintStyle: TextStyle(color: Colors.black)),
                           )
                         : const Text(
@@ -131,74 +226,14 @@ class _NoContactPageState extends State<ContactPage> {
                             contactList.clear();
                             setState(() {});
                           }
-                        },
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
-                          const PopupMenuItem(
-                              value: "Delete", child: Text("Delete all")),
-                          const PopupMenuItem(
-                            value: "A-Z",
-                            child: Text("Sort by A-Z"),
-                          ),
-                          const PopupMenuItem(
-                            value: "Z-A",
-                            child: Text("Sort by Z-A"),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                : AppBar(
-                    backgroundColor: Colors.white,
-                    leading: IconButton(
-                        onPressed: () {
-                          isClicked = !isClicked;
-                          setState(() {
-
-                          });
-                        },
-                        icon: Icon(
-                          CupertinoIcons.chevron_back,
-                          color: Colors.black,
-                        )),
-                    title: isClicked
-                        ? TextFormField(
-                            onChanged: (user) {
-                              searchedUsers(user);
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                                hintText: "Search...",
-                                hintStyle: TextStyle(color: Colors.black)),
-                          )
-                        : const Text(
-                            "Contacts",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.black),
-                          ),
-                    actions: [
-                      InkWell(
-                          onTap: () {
-                            isClicked = !isClicked;
+                          if (value == "A-Z") {
+                            contactList
+                                .sort((a, b) => a.name.compareTo(b.name));
                             setState(() {});
-                          },
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          )),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      PopupMenuButton(
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: Colors.black,
-                        ),
-                        onSelected: (value) {
-                          if (value == "Delete") {
-                            contactList.clear();
+                          }
+                          if (value == "Z-A") {
+                            contactList
+                                .sort((a, b) => b.name.compareTo(a.name));
                             setState(() {});
                           }
                         },
